@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportPulse Hub - Twitter Dashboard</title>
+
+    <script src="/static/lib/socket.io.js"></script>
+    <script src="/static/lib/core.js"></script>
+    <script src="/static/lib/tweets.js"></script>
+
+    <link rel="stylesheet" href="/static/style/tweet.css" />
+</head>
+<body>
+    <!--Top Notification bar -->
+    <div id="notification-bar">
+        <span>New Notification - User Tweeted</span>
+    </div>
+
+    <!-- Main Container-->
+    <div id="dashboard-container">
+        <!--Header-->
+        <header id="dashboard-header">
+            <h1>SportPulse Hub - Twitter Dashboard</h1>
+            <div id="search-bar"></div>
+                <input type=""text" placeholders="Search..."/>
+                <button>Search</button>
+                <img src="" alt="User Proile" id="user-icon">
+            </div>
+        </header>
+
+        <!--Main Content Area-->
+        <div id="content">
+            <!--Tweet Aggregation (Word Cloud)-->
+            <section id="tweet-aggregation">
+                <h2>Tweet Aggregation</h2>
+                <div id="word-cloud">
+                    <p>Basketball Football Volleyball Pool Boxing Tennis Skiing Cycling...</p>
+                </div>
+            </section>
+
+            <!--Top Tweets Section-->
+            <section id="top-tweets">
+                <h2>Top Tweets</h2>
+                <div class="tweet-placeholder"></div>
+                <div class="tweet-placeholder"></div>
+                <div class="tweet-placeholder"></div>
+            </section>
+
+            <!-- Latest Tweets Section -->
+             <section id="latest-tweets">
+                <h2>Latest Tweets</h2>
+                <div class="tweet-placeholder"></div>
+                <div class="tweet-placeholder"></div>
+                <div class="tweet-placeholder"></div> 
+             </section>
+
+             <!--Tweet Stream Container-->
+             <div id="tweets"></div>
+
+             <!--Filters-->
+             <aside id="filters">
+                <h3>Filters</h3>
+                <div class="filter-group">
+                    <p>Sport</p>
+                    <input type="checkbox" id="basketball" name="sport"><label for="basketball">Basketball</label><br>
+                    <input type="checkbox" id="football" name="sport"><label for="football">Football</label><br>
+                    <input type="checkbox" id="volleyball" name="sport"><label for="volleyball">Volleyball</label>
+                </div>
+                <div class="filter-group">
+                    <p>Year</p>
+                    <input type="checkbox" id="2019" name="year"><label for="2019">2019</label><br>
+                    <input type="checkbox" id="2021" name="year"><label for="2019">2021</label><br>
+                    <input type="checkbox" id="2022" name="year"><label for="2019">2022</label>
+                </div>
+                <div class="filter-group">
+                    <p>Region</p>
+                    <input type="checkbox" id="netherlands" name="region"><label for="netherlands">Netherlands</label><br>
+                    <input type="checkbox" id="germany" name="region"><label for="germany">Germany</label>
+                </div>
+            </aside>
+
+            <!--Top Accounts-->
+            <section id="top-accounts">
+                <h2>Top Accounts</h2>
+                <div class="account-placeholder"></div>
+                <div class="account-placeholder"></div>
+                <div class="account-placeholder"></div>
+            </section>
+
+            <!--Type Year Input-->
+            <section id="type-year">
+                <h2>Type Year...</h2>
+                <input type="text" placeholder="Enter Year">
+                <div class="year-placeholder"></div>
+                <div class="year-placeholder"></div>
+                <div class="year-placeholder"></div>
+            </section>
+
+            <!--Tweet Activity Graph-->
+            <section id="tweet-activity">
+                <h2>Tweet Activity</h2>
+                <div id="activity-graph">
+                    <!--Placeholder for  graph-->
+                </div>
+            </section>
+
+            <!--Sentiment Analysis Bar Chart-->
+            <seciton id="sentiment-analysis">
+                <h2>Sentiment Analysis</h2>
+                <div id="sentiment-chart">
+                    <!--Placeholder for chart-->
+                </div>
+            </section>
+
+            <!--Poll (Yes/No)-->
+            <section id="poll">
+                <h2>Poll</h2>
+                <input type="radio" id="yes" name="poll"><label for="yes">Yes</label><br>
+                <input type="radio" id="no" name="poll"><label for="no">No</label>
+            </section>
+
+            <!--Report Actions-->
+            <section id="report-actions">
+                <button id="share-report">Share Report</button>
+                <button id="export-report">Export Report</button>
+            </section>
+        </div>
+    </div>
+
+    <div id="tweets"></div>
+    <script>
+       // Those are the tweets 
+        var tweet = tweets("tweets");
+        connect_block(tweet, 'x');
+    </script>
+</body>
+</html>
