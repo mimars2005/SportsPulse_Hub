@@ -1,0 +1,399 @@
+
+/*
+==========================================================================================================================
+                                                    Fonts (DO NOT REMOVE)
+==========================================================================================================================
+*/
+@font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.3a18e64a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.7a5673aa.woff) format('woff');
+    font-weight: 300;
+    font-style: 'normal';
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.80fda27a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.60b215ba.woff) format('woff');
+    font-weight: 400;
+    font-style: 'normal';
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.f8e2739a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.20fc288a.woff) format('woff');
+    font-weight: 500;
+    font-style: 'normal';
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.ebb56aba.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.a573679a.woff) format('woff');
+    font-weight: 700;
+    font-style: 'normal';
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: TwitterChirp;
+    src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.f44ae4ea.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.d70ec7ca.woff) format('woff');
+    font-weight: 800;
+    font-style: 'normal';
+    font-display: 'swap';
+  }
+  @font-face {
+    font-family: TwitterChirpExtendedHeavy;
+    src: url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff2) format('woff2'), url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff) format('woff');
+    font-weight: 800;
+    font-style: 'normal';
+    font-display: 'swap';
+  }
+
+
+/*
+==========================================================================================================================
+                                                    General
+==========================================================================================================================
+*/
+.tweets {
+    font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    color: #EDEDED;
+    line-height: 1.3125;
+    margin: 10px;
+    padding: 10px;
+}
+
+
+.tweet-wrapper {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+
+    overflow: hidden;
+
+    display: flex;
+}
+
+.tweet-wrapper .tweet-header {
+    margin-bottom: 10px;
+}
+
+.tweet-user {
+    display: flex;
+    align-items: left;
+}
+
+.tweet-user-name {
+    font-weight: bold;
+    margin: 0px 10px 0px 0px;
+}
+
+.tweet-user-screen-name {
+    color: #777;
+    margin: 0px 10px 0px 0px;
+
+    /* Remove underline */
+    text-decoration: none;
+
+}
+
+.tweet-user-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.tweet-text {
+    margin: 0px;
+}
+.tweet-text a {
+    color: #1da1f2;
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+==========================================================================================================================
+                                                    Fonts (DO NOT REMOVE)
+==========================================================================================================================
+*/
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.3a18e64a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Light.7a5673aa.woff) format('woff');
+  font-weight: 300;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.80fda27a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.60b215ba.woff) format('woff');
+  font-weight: 400;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.f8e2739a.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.20fc288a.woff) format('woff');
+  font-weight: 500;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.ebb56aba.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.a573679a.woff) format('woff');
+  font-weight: 700;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirp;
+  src: url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.f44ae4ea.woff2) format('woff2'), url(https://abs.twimg.com/responsive-web/client-web/Chirp-Heavy.d70ec7ca.woff) format('woff');
+  font-weight: 800;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+@font-face {
+  font-family: TwitterChirpExtendedHeavy;
+  src: url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff2) format('woff2'), url(https://abs.twimg.com/fonts/v1/chirp-extended-heavy-web.woff) format('woff');
+  font-weight: 800;
+  font-style: 'normal';
+  font-display: 'swap';
+}
+
+/*
+==========================================================================================================================
+                                                  General and Theme Colors
+==========================================================================================================================
+*/
+
+body {
+  background-color: #2C2C2C; /* Soft dark gray background */
+  color: #EDEDED; /* Light gray text for readability */
+  font-family: TwitterChirp, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Top Bar */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #3B3B3B; /* Darker gray for contrast */
+  color: #FF914D; /* Warm orange for notifications */
+  border-bottom: 1px solid #FF914D; /* Accent border */
+}
+
+.dashboard-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #FFB26B; /* Softer orange for the title */
+}
+
+.notification {
+  opacity: 0; /* Start fully transparent */
+  font-weight: 500;
+  color: #FF914D;
+  transition: opacity 0.5s ease-in-out; /* Smooth fade-in/out */
+}
+
+/* Make the notification visible by setting opacity */
+.notification.active {
+  opacity: 1;
+}
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #FF914D;
+  border-radius: 20px;
+  outline: none;
+  background-color: #2C2C2C;
+  color: #EDEDED;
+}
+.search-bar::placeholder {
+  color: #FFB26B; /* Softer orange placeholder */
+}
+
+.user-icon {
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  border-radius: 50%;
+}
+
+/* Dashboard Layout */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-gap: 20px;
+  padding: 20px;
+}
+
+/* Row 1: Tweet Aggregation, Top Tweets, Latest Tweets, Top Accounts, Filters */
+.tweet-aggregation {
+  grid-column: 1 / span 1;
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+}
+
+.top-tweets {
+  grid-column: 2 / span 1;
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+}
+
+.latest-tweets {
+  grid-column: 3 / span 1;
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+}
+
+.top-accounts {
+  grid-column: 4 / span 1;
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+}
+
+.filters {
+  grid-column: 5 / span 1; /* Now placed in the first row */
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+}
+
+/* Headers within sections */
+h2, h3 {
+  color: #FFB26B; /* Warm orange headers */
+}
+
+/* Additional Styles for the Dashboard */
+.tweet-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.tweet {
+  background-color: #444444; /* Darker gray for individual tweet backgrounds */
+  border: 1px solid #FF914D; /* Orange border for tweets */
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #EDEDED;
+}
+
+.tweet-wrapper .tweet-header {
+  margin-bottom: 10px;
+}
+
+.tweet-user-name {
+  font-weight: bold;
+  color: #FFB26B;
+}
+
+.tweet-user-screen-name {
+  color: #FF914D;
+}
+
+.tweet-text a {
+  color: #FF914D;
+  text-decoration: none;
+}
+
+/* Row 2: Tweet Activity and Sentiment Analysis */
+.tweet-activity {
+  grid-column: 1 / span 2;
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+}
+
+.sentiment-analysis {
+  grid-column: 3 / span 2;
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 400px;
+}
+
+/* Poll Section */
+.poll {
+  background-color: #3A3A3A;
+  border: 1px solid #FF914D;
+  border-radius: 8px;
+  padding: 15px;
+  color: #FFB26B;
+}
+
+.poll h2 {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.poll div {
+  margin: 10px 0;
+}
+
+/* Report Actions */
+.report-actions {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button {
+  background-color: #FF914D; /* Main orange for buttons */
+  color: #FFF;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #D86C3F; /* Darker orange for hover effect */
+}
+
+/* Filters and Polls */
+.filters, .search-filters {
+  padding: 15px;
+  color: #FFB26B;
+}
+
+/* Chart Colors */
+canvas {
+  background-color: #2C2C2C; /* Matching background for charts */
+}
+
+#search_container {
+  max-height: 250px; /* Maximum height for the container */
+  overflow-y: scroll; /* Enable vertical scrolling */
+  padding: 10px; /* Optional: Adds some padding */
+}

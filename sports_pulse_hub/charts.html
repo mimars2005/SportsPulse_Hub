@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Retweet Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+</head>
+<body>
+    <canvas id="retweetChart" width="600" height="400"></canvas>
+    
+    <script>
+        const socket = io();  // Connect to the Flask-SocketIO server
+        
+        // Initialize Chart.js
+        const ctx = document.getElementById('retweetChart').getContext('2d');
+        const retweetChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [],  // Empty labels initially
+                datasets: [{
+                    label: 'Retweet Count',
+                    data: [],
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    fill: true,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Retweet Count'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Time'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+
+        // Listen for tweet events from the server
+        socket.on("tweet_event", (data) => {
+            const tweetText = data.tweet;  // Assuming data has a 'tweet' and 'retweet_count'
+            const retweetCount = data.retweet_count;
+            
+            // Add new data to the chart
+            retweetChart.data.labels.push(tweetText);  // Add the tweet text as a label
+            retweetChart.data.datasets[0].data.push(retweetCount);  // Add retweet count
+            
+            // Keep only the last 10 tweets in the chart for readability
+            if (retweetChart.data.labels.length > 10) {
+                retweetChart.data.labels.shift();
+                retweetChart.data.datasets[0].data.shift();
+            }
+
+            retweetChart.update();  // Update the chart
+        });
+    </script>
+</body>
+</html>

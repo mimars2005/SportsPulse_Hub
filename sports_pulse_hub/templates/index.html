@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportPulse Hub - Twitter Dashboard</title>
+
+    <!-- Include Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="/static/lib/socket.io.js"></script>
+    <script src="/static/lib/core.js"></script>
+    <script src="/static/lib/tweets.js"></script>
+    <script src="/static/lib/top_account.js"></script>
+    <script src="/static/lib/top_tweet.js"></script>
+    <script src="/static/lib/sentiment_analysis.js"></script>
+    <script src="/static/lib/tweets_activity.js"></script>
+    <script src="/static/lib/search_tweets.js"></script>
+
+    <link rel="stylesheet" href="/static/style/tweet.css" />
+</head>
+<body>
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="notification">New Notification – User Tweeted</div>
+        <h1 class="dashboard-title">SportPulse Hub - Twitter Dashboard</h1>
+        <div class="search-container">
+            <input type="text" id="search-bar" class="search-bar" placeholder="Search..." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search...'" />
+            <script> 
+            
+                const inputField = document.getElementById("search-bar");
+                inputField.addEventListener("keydown", function(event) {
+                // Check if the Enter key was pressed
+                if (event.key === "Enter") {
+                    // Call the function or write your code here
+                    fetch('/search', {
+                    method: "POST",                     // HTTP method
+                    headers: {
+                        "Content-Type": "application/json"  // Specify JSON format
+                    },
+                    body: JSON.stringify(inputField.value)           // Convert data to JSON
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok " + response.statusText);
+                        }
+                        return response.json();              // Parse JSON response
+                    })
+                    .then(data => {
+                        console.log("Success:", data);       // Handle the JSON data from the response
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);      // Handle any errors
+                    });
+                    }})
+            </script>
+            <img src="/static/images/user-icon.png" alt="User Profile" class="user-icon">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard">
+        <!-- Row 1: Tweet Aggregation, Top Tweets, Latest Tweets, Top Accounts, Filters -->
+        <section class="tweet-aggregation">
+            <h2>Tweet Aggregation</h2>
+            <div id="search_container">
+            <script>
+                var search = search_tweets("search_container");
+                connect_block(search, 'search');
+            </script>
+            </div>
+        </section>
+
+        <section class="top-tweets">
+            <h2>Top Tweets</h2>
+            <div id="top-tweets-list", class="tweet-list">
+                <script>
+                    var tweet = top_tweets("top-tweets-list");
+                    connect_block(tweet, 'add_top_tweets');
+                </script>
+            </div>
+        </section>
+
+        <section class="latest-tweets">
+            <h2>Latest Tweets</h2>
+            <div id="latest-tweets-container" class="tweet-list">
+                <!-- Dynamically loaded latest tweets will appear here using tweet-wrapper design -->
+            </div>
+            <script>
+                var tweet = tweets("latest-tweets-container");
+                connect_block(tweet, 'tweets');
+            </script>
+        </section>
+
+        <section class="top-accounts">
+            <h2>Top Accounts</h2>
+            <ul id="accounts_container">
+            <script>
+                var top_account=top_accounts("accounts_container");
+                connect_block(top_account,'add_top_accounts');
+            </script>
+            </ul>
+        </section>
+
+        <section class="filters">
+            <h3>Filters</h3>
+            <div>
+                <label>Sport:</label><br>
+                <input type="checkbox" name="sport" value="Basketball" /> Basketball<br>
+                <input type="checkbox" name="sport" value="Football" /> Football<br>
+                <input type="checkbox" name="sport" value="Volleyball" /> Volleyball
+            </div>
+            <div>
+                <label>Regions:</label><br>
+                <input type="checkbox" name="region" value="Netherlands" /> Netherlands<br>
+                <input type="checkbox" name="region" value="Germany" /> Germany
+            </div>
+        </section>
+
+        <!-- Row 2: Tweet Activity Line Chart, Sentiment Analysis Bar Chart, Poll -->
+        <section class="tweet-activity">
+            <h2>Tweet Activity</h2>
+            <canvas id="tweet-activity-chart"></canvas> <!-- Canvas for line chart -->
+        </section>
+
+        <section class="sentiment-analysis">
+            <h2>Sentiment Analysis</h2>
+            <canvas id="sentiment-analysis-chart"></canvas> <!-- Canvas for bar chart -->
+        </section>
+
+        <section class="poll">
+            <h2>Poll</h2>
+            <div>
+                <input type="radio" name="poll" id="poll-yes" value="yes" />
+                <label for="poll-yes">Yes</label>
+            </div>
+            <div>
+                <input type="radio" name="poll" id="poll-no" value="no" />
+                <label for="poll-no">No</label>
+            </div>
+        </section>
+
+        <!-- Report Actions -->
+        <section class="report-actions">
+            <button onclick="shareReport()">Share Report</button>
+            <button onclick="exportReport()">Export Report</button>
+        </section>
+    </main>
+
+    <script>
+        const latestTweetsContainer = document.getElementById('latest-tweets-container');
+        const notificationBar = document.getElementById('notification-bar');
+
+    // Function to show notification
+    function showNotification() {
+        notificationBar.style.opacity = '1'; // Fade in
+        
+        // Hide the notification after 5 seconds
+        setTimeout(() => {
+            notificationBar.style.opacity = '0'; // Fade out
+        }, 5000);
+    }
+
+    // Function to add a new tweet and trigger notification
+    function addTweetToLatest(user, text, time) {
+        const tweetWrapper = document.createElement('div');
+        tweetWrapper.classList.add('tweet-wrapper');
+
+        // Tweet user image
+        const userImg = document.createElement('img');
+        userImg.src = '/static/images/user-icon.png';
+        userImg.classList.add('tweet-user-img');
+
+        // Tweet content container
+        const tweetContent = document.createElement('div');
+        tweetContent.classList.add('tweet-content');
+
+        // Tweet header
+        const tweetHeader = document.createElement('div');
+        tweetHeader.classList.add('tweet-header');
+        tweetHeader.innerHTML = `<span class="tweet-user-name">${user}</span> <span class="tweet-user-screen-name">@${user}</span> • <span class="tweet-time">${time}</span>`;
+
+        // Tweet text
+        const tweetText = document.createElement('p');
+        tweetText.classList.add('tweet-text');
+        tweetText.textContent = text;
+
+        // Append elements
+        tweetContent.appendChild(tweetHeader);
+        tweetContent.appendChild(tweetText);
+        tweetWrapper.appendChild(userImg);
+        tweetWrapper.appendChild(tweetContent);
+        latestTweetsContainer.prepend(tweetWrapper);
+
+        // Trigger notification
+        showNotification();
+    }
+
+    // Example: Add sample tweets every 5 seconds
+    // setInterval(() => {
+    //     const sampleTweet = {
+    //         user: 'SportPulse',
+    //         text: 'Exciting game coming up this weekend! Who’s ready? #sports',
+    //         time: new Date().toLocaleTimeString()
+    //     };
+    //     addTweetToLatest(sampleTweet.user, sampleTweet.text, sampleTweet.time);
+    // }, 5000); // Adds a new tweet every 5 seconds
+
+
+        // // Sample data for Tweet Activity (line chart)
+        // const tweetActivityData = {
+        //     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'], // X-axis labels
+        //     datasets: [{
+        //         label: 'Number of Tweets',
+        //         data: [10, 20, 15, 30, 25, 40, 35], // Data points
+        //         borderColor: '#1da1f2',
+        //         backgroundColor: 'rgba(29, 161, 242, 0.2)',
+        //         fill: true,
+        //     }]
+        // };
+
+        // // Tweet Activity Line Chart
+        // const tweetActivityCtx = document.getElementById('tweet-activity-chart').getContext('2d');
+        // new Chart(tweetActivityCtx, {
+        //     type: 'line',
+        //     data: tweetActivityData,
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 display: true,
+        //                 position: 'top',
+        //             }
+        //         },
+        //         scales: {
+        //             x: {
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Months'
+        //                 }
+        //             },
+        //             y: {
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Tweets'
+        //                 },
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     }
+        // });
+        var activity = tweets_activity();
+        connect_block(activity, 'tweets_activity');
+        var analysis = sentiment_analysis();
+        connect_block(analysis, 'sentiment_analysis');
+         
+        // // Sample data for Sentiment Analysis (bar chart)
+        // const sentimentAnalysisData = {
+        //     labels: ['Positive', 'Neutral', 'Negative'], // Categories on X-axis
+        //     datasets: [{
+        //         label: 'Sentiment Count',
+        //         data: [0, 0, 0], // Data points
+        //         backgroundColor: ['#28a745', '#ffc107', '#dc3545'], // Colors for each bar
+        //     }]
+        // };
+
+        // // Sentiment Analysis Bar Chart
+        // const sentimentAnalysisCtx = document.getElementById('sentiment-analysis-chart').getContext('2d');
+        // new Chart(sentimentAnalysisCtx, {
+        //     type: 'bar',
+        //     data: sentimentAnalysisData,
+        //     options: {
+        //         responsive: true,
+        //         plugins: {
+        //             legend: {
+        //                 display: true,
+        //                 position: 'top',
+        //             }
+        //         },
+        //         scales: {
+        //             x: {
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Sentiment'
+        //                 }
+        //             },
+        //             y: {
+        //                 title: {
+        //                     display: true,
+        //                     text: 'Count'
+        //                 },
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     }
+        // });
+
+
+        // Example functions for Report Actions
+        function shareReport() {
+            alert("Report shared!");
+        }
+
+        function exportReport() {
+            alert("Report exported!");
+        }
+    </script>
+</body>
+</html>
